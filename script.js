@@ -4,9 +4,29 @@ const pass = "hello123";
 const baseUrl = "https://www.hackerearth.com";
 
 let data = [];
-
-async function registerChall(url, tab){
+let candidateInformation = {
+    name: "Jane Doe",
+    gender: "F",
+    currentLoc: "Delhi",
+    phoneCode: "+91",
+    contactNumber: "9999999999",
+    institution: "VIT"
+}
+async function registerChall(url, tab){ 
     await tab.goto(url);
+    await tab.waitForSelector("#id_full_name");
+    await tab.click("#id_full_name");
+    await tab.keyboard.down("Control");
+    await tab.keyboard.press("A");
+    //await tab.keyboard.press("Delete");
+    await tab.keyboard.up("Control");
+    await tab.type("#id_full_name", candidateInformation.name);
+    await tab.select("#id_gender", candidateInformation.gender);
+    await tab.type("#id_city", candidateInformation.currentLoc);
+    await tab.type("#id_phone_code", candidateInformation.phoneCode);
+    await tab.type("#id_phone_number", candidateInformation.contactNumber);
+    await tab.type("#id_institute", candidateInformation.institution);
+
 }
 
 async function getDetailsAndRegister(url, tab){
@@ -64,10 +84,10 @@ async function main(){
             }, i)
             challUrls.push(url);
         } 
-        await registerChall(baseUrl + challUrls[0], tab);
-        for(let url of challUrls) await getDetailsAndRegister(baseUrl + url, tab);
-        console.log(data);
-        await browser.close();
+        await getDetailsAndRegister(baseUrl + challUrls[0], tab);
+        // for(let url of challUrls) await getDetailsAndRegister(baseUrl + url, tab);
+        // console.log(data);
+        // await browser.close();
     }catch(err) {
         console.log(err);
     }    
