@@ -1,5 +1,5 @@
 const puppy = require("puppeteer");
-const email = "revem42575@shzsedu.com";
+const email = "ximone3768@zcai77.com";
 const pass = "hello123";
 const baseUrl = "https://www.hackerearth.com";
 
@@ -10,7 +10,13 @@ let candidateInformation = {
     currentLoc: "Delhi",
     phoneCode: "+91",
     contactNumber: "9999999999",
-    institution: "VIT"
+    institution: "VIT",
+    degree: "Bachelor of Technology",
+    stream: "Computer Science Engineering" ,
+    gradYear: "2021",
+    cgpa: "9.1",
+    yearsExp: "0",
+    interest: "Yes"
 }
 async function registerChall(url, tab){ 
     await tab.goto(url);
@@ -18,7 +24,6 @@ async function registerChall(url, tab){
     await tab.click("#id_full_name");
     await tab.keyboard.down("Control");
     await tab.keyboard.press("A");
-    //await tab.keyboard.press("Delete");
     await tab.keyboard.up("Control");
     await tab.type("#id_full_name", candidateInformation.name);
     await tab.select("#id_gender", candidateInformation.gender);
@@ -26,7 +31,16 @@ async function registerChall(url, tab){
     await tab.type("#id_phone_code", candidateInformation.phoneCode);
     await tab.type("#id_phone_number", candidateInformation.contactNumber);
     await tab.type("#id_institute", candidateInformation.institution);
-
+    await tab.click("#id_degree + div");
+    await tab.type("#id_degree + div", candidateInformation.degree);
+    await tab.keyboard.press("Enter");
+    await tab.click("#id_stream + div");
+    await tab.type("#id_stream + div", candidateInformation.stream);
+    await tab.keyboard.press("Enter");
+    await tab.select("#id_graduation_year", candidateInformation.gradYear);
+    await tab.type("#id_cgpa", candidateInformation.cgpa);
+    await tab.select("#id_years_of_experience", candidateInformation.yearsExp);
+    await tab.select("#dynamic-data-div select", candidateInformation.interest);
 }
 
 async function getDetailsAndRegister(url, tab){
@@ -66,7 +80,7 @@ async function main(){
         await tab.type("#id_login", email);
         await tab.type("#id_password", pass);
         await tab.click(".track-login");
-        await tab.waitForSelector("img[src='https://s3-ap-southeast-1.amazonaws.com/he-public-data/280x120@3x-8082080e4.jpg']");
+        await tab.waitForSelector('img[src="https://s3-ap-southeast-1.amazonaws.com/he-public-data/Microsoft%20top%20right%20banner0d61492.png"]');
         await Promise.all([
             tab.click("#id_is_competitive"), 
             tab.waitForNavigation({waitUntil: 'networkidle0'})
